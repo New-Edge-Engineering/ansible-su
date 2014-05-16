@@ -1,0 +1,16 @@
+---
+- name: ensuring admin group is present
+  group:
+    name=admin
+    state=present
+
+- name: ensuring root belongs to admin
+  user:
+    name=root
+    groups=admin
+
+- name: harden who can su to the admin group
+  shell: "dpkg-statoverride --update --add root admin 4750 /bin/su"
+
+# REFERENCES:
+# Ubuntu step 4 hardening from http://www.thefanclub.co.za/how-to/how-secure-ubuntu-1204-lts-server-part-1-basics
